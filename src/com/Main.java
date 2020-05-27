@@ -1,5 +1,6 @@
 package com;
 
+import com.classes.Terminal;
 import com.classes.WorkSpace;
 import com.classes.serverSide.CommandProcessingModule;
 import com.classes.serverSide.Listener;
@@ -11,7 +12,7 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 public class Main {
-    public static final int PORT = 62222;
+    public static int PORT = 62222;
     private static final Logger logger = Logger.getLogger("Server");
 
 
@@ -22,12 +23,18 @@ public class Main {
 
     public static void ServerStart(){
         DatagramSocket datagramSocket = null;
-        try {
-            datagramSocket = new DatagramSocket(PORT);
-        } catch (SocketException e) {
-            e.printStackTrace();
+        while(true){
+            try {
+                int port = Integer.parseInt(Terminal.readLine("Введите порт:"));
+                datagramSocket = new DatagramSocket(port);
+                PORT = port;
+                break;
+            } catch (SocketException | IllegalArgumentException e) {
+                e.printStackTrace();
+            }
         }
-        if(datagramSocket!=null){
+
+        if(datagramSocket.isBound()){
             logger.info("Сервер запущен.");
             CommandProcessingModule commandProcessingModule = new CommandProcessingModule();
             Sender sender = new Sender(datagramSocket);

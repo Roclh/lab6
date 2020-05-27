@@ -6,6 +6,10 @@ import com.exceptions.NoSuchCommandException;
 import com.wrappers.UserCommand;
 
 
+/**
+ * Данный класс реализует основной цикл работы программы.
+ */
+
 public class WorkSpace {
     private static UserCommand userCommand;
 
@@ -19,6 +23,10 @@ public class WorkSpace {
 
     }
 
+    /**
+     * Цикл комманды реализует одиночное считывание комманды пользователя,
+     * @param command
+     */
     private void commandCycle(String command){
         userCommand = CommandTranslator.translateCommand(command);
         try{

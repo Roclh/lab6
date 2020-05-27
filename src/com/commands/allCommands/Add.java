@@ -13,11 +13,27 @@ import com.exceptions.SavePeopleException;
 import com.wrappers.Person;
 import com.wrappers.UserCommand;
 
+/**
+ * @author Roclh
+ * @see Command
+ *
+ * Данный класс реализует работу комманды add, которая добавляет объект с заданными пользователем параметрами.
+ */
+
 public class Add extends Command {
     public Add() {
         super("add");
     }
 
+
+    /**
+     * @see Command
+     * Данный метод реализует работу комманды add на сервере. В качестве аргументов комманда может получить строчку
+     * формата json с параметрами класса Person, которую она конвертирует в объект класса Person, заполнив недостающие
+     * параметры случайными значениями.
+     * Если аргументов в комманде нету, то программа построчно ожидает на вход параметры класса Person.
+     *
+     */
     @Override
     public void execute(){
         UserCommand userCommand = WorkSpace.getUserCommand();
@@ -144,6 +160,13 @@ public class Add extends Command {
         }
     }
 
+    /**
+     * @see Command
+     * Данный метод реализует работу комманды add на сервере. В качестве аргументов комманда может получить строчку
+     * формата json с параметрами класса Person, которую она конвертирует в объект класса Person, заполнив недостающие
+     * параметры случайными значениями.
+     * Так как клиент в любом случае отправляет комманду с аргументом в формате json, обработки комманды иным способом нету.
+     */
     @Override
     public String serverExecute(){
         UserCommand userCommand = CommandProcessingModule.getCPMCommand();
@@ -152,7 +175,7 @@ public class Add extends Command {
                 if(QueueController.getQueue().offer(person)) return ("Человек добавлен");
                 else return ("Возникла ошибка добавления человека");
             } catch (SavePeopleException e) {
-                return (e.getMessage());
+                return ("Ошибка в вводе данных");
             }
         }
 }

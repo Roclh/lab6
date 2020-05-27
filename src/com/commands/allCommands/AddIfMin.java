@@ -13,6 +13,13 @@ import java.io.IOException;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
+/**
+ * @author Roclh
+ * @see Command
+ *
+ * Данный класс реализует работу комманды add_if_min, которая добавляет объект с заданными пользователем параметрами если объект меньше остальных.
+ */
+
 public class AddIfMin extends Command {
     public AddIfMin() {
         super("add_if_min");

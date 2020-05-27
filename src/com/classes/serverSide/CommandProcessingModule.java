@@ -8,6 +8,11 @@ import com.commands.AllCommands;
 import com.exceptions.NoSuchCommandException;
 import com.wrappers.UserCommand;
 
+/**
+ * Данный класс реализует обработку комманд, полученных с Listener
+ * @see Listener
+ */
+
 public class CommandProcessingModule {
     private static UserCommand CPMCommand;
 
