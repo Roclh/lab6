@@ -34,11 +34,9 @@ public class AllCommands {
             allCommands.add(new Help());
             allCommands.add(new History());
             allCommands.add(new Info());
-            allCommands.add(new Load());
             allCommands.add(new PrintUniqueHeight());
             allCommands.add(new RemoveById());
             allCommands.add(new RemoveLower());
-            allCommands.add(new Save());
             allCommands.add(new Show());
             allCommands.add(new UpdateById());
             isInitiated = true;

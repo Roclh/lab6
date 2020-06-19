@@ -1,12 +1,17 @@
 package com.commands.allCommands;
 
 import com.classes.CommandTranslator;
+import com.classes.JDBCConnection;
 import com.classes.QueueController;
 import com.classes.WorkSpace;
+import com.classes.serverSide.CommandProcessingModule;
 import com.commands.Command;
+import com.exceptions.NoAnyActivityYetException;
 import com.exceptions.SavePeopleException;
 import com.wrappers.Person;
 import com.wrappers.UserCommand;
+
+import java.util.List;
 
 public class RemoveLower extends Command {
     public RemoveLower() {
@@ -26,15 +31,14 @@ public class RemoveLower extends Command {
 
     @Override
     public String serverExecute() {
-        UserCommand userCommand = WorkSpace.getUserCommand();
         try {
+            UserCommand userCommand = CommandProcessingModule.getCPMCommand();
+            List<Long> list = JDBCConnection.getAvailableId(CommandProcessingModule.getCPMConnection());
             Person p = CommandTranslator.translateArg(userCommand.getArg1());
-            long size = QueueController.getQueue().size();
-            QueueController.getQueue().removeIf(person -> person.compareTo(p) < 0);
-            if(size> QueueController.getQueue().size())
+            if(QueueController.removeIf(person -> person.compareTo(p) < 0 && list.contains(person.getId()))){
                 return "Объект был удален";
-                else return "Объект не был удален";
-        } catch (SavePeopleException e) {
+            }else return "Объект не был удален";
+        } catch (SavePeopleException | NoAnyActivityYetException e) {
             return (e.getMessage());
         }
     }

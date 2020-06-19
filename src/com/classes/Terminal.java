@@ -15,6 +15,8 @@ public class Terminal {
         return sc.nextLine();
     }
 
+
+
     public static int choose(String... args) {
         int kol = args.length;
 

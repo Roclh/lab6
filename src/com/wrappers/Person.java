@@ -1,5 +1,6 @@
 package com.wrappers;
 
+import com.classes.JDBCConnection;
 import com.enums.*;
 
 import java.io.Serializable;
@@ -23,7 +24,7 @@ public class Person implements Comparable<Person>, Serializable {
 
     public Person() {
         this.name = "Test";
-        this.id = this.hashCode();
+        this.id = JDBCConnection.getMaxId() + 1L;
         this.creationDate = java.time.LocalDateTime.now();
         this.coordinates = new Coordinates((long) 1, 1);
         this.height = 1f;

@@ -19,7 +19,7 @@ public class Info extends Command {
         ans.set(ans + "В коллекции содержаться объекты типа Person\r\n");
         if (QueueController.getQueue().size() > 0) {
             ans.set(ans + "В коллекции сейчас находится " + QueueController.getQueue().size() + " элементов. Они приведены ниже\r\n");
-            QueueController.getQueue().forEach(person -> ans.set(ans + "Name: " + person.getName() + ", Id:" + person.getId() + "\r\n"));
+            QueueController.doWithAll(person -> ans.set(ans + "Name: " + person.getName() + ", Id:" + person.getId() + "\r\n"));
             ans.set(ans + "================================================\r\n");
             System.out.println(ans.get());
         } else {
@@ -34,7 +34,7 @@ public class Info extends Command {
         ans.set(ans + "В коллекции содержаться объекты типа Person\r\n");
         if (QueueController.getQueue().size() > 0) {
             ans.set(ans + "В коллекции сейчас находится " + QueueController.getQueue().size() + " элементов. Они приведены ниже\r\n");
-            QueueController.getQueue().forEach(person -> ans.set(ans + "Name: " + person.getName() + ", Id:" + person.getId() + "\r\n"));
+            QueueController.doWithAll(person -> ans.set(ans + "Name: " + person.getName() + ", Id:" + person.getId() + "\r\n"));
             ans.set(ans + "================================================\r\n");
             return (ans.get());
         } else {

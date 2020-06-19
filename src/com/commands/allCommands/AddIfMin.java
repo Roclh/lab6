@@ -29,7 +29,7 @@ public class AddIfMin extends Command {
     public void execute() {
         UserCommand userCommand = WorkSpace.getUserCommand();
         String ans = "";
-        if (QueueController.getQueue().size() > 0) {
+        if (QueueController.size() > 0) {
             try {
             Person p = CommandTranslator.translateArg(userCommand.getArg1());
             Queue<Person> buf = new PriorityQueue<>(QueueController.getQueue());
@@ -40,7 +40,7 @@ public class AddIfMin extends Command {
             }
             assert min != null;
             if (p.compareTo(min) < 0) {
-                QueueController.getQueue().offer(p);
+                QueueController.offer(p);
                 ans = ans + "Объект с именем " + p.getName() + " добавлен\n";
                 System.out.println(ans);
             } else System.out.println("Данный элемент не является минимальным\n");
@@ -56,7 +56,7 @@ public class AddIfMin extends Command {
     public String serverExecute() {
         UserCommand userCommand = CommandProcessingModule.getCPMCommand();
         String ans = "";
-        if (QueueController.getQueue().size() > 0) {
+        if (QueueController.size() > 0) {
             try {
                 Person p = CommandTranslator.translateArg(userCommand.getArg1());
                 Queue<Person> buf = new PriorityQueue<>(QueueController.getQueue());
@@ -67,7 +67,7 @@ public class AddIfMin extends Command {
                 }
                 assert min != null;
                 if (p.compareTo(min) < 0) {
-                    QueueController.getQueue().offer(p);
+                    QueueController.offer(p);
                     ans = ans + "Объект с именем " + p.getName() + " добавлен\n";
                     return (ans);
                 } else return ("Данный элемент не является минимальным\n");

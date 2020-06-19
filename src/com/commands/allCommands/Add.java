@@ -1,9 +1,6 @@
 package com.commands.allCommands;
 
-import com.classes.CommandTranslator;
-import com.classes.QueueController;
-import com.classes.Terminal;
-import com.classes.WorkSpace;
+import com.classes.*;
 import com.classes.serverSide.CommandProcessingModule;
 import com.commands.Command;
 import com.enums.Country;
@@ -154,7 +151,7 @@ public class Add extends Command {
                     System.out.println("Координата Z введена неверно");
                 }
             }
-            if (QueueController.getQueue().offer(person)) System.out.println("Персонаж добавлен");
+            if (QueueController.offer(person)) System.out.println("Персонаж добавлен");
             else System.out.println("Произошла ошибка");
 
         }
@@ -171,8 +168,10 @@ public class Add extends Command {
     public String serverExecute(){
         UserCommand userCommand = CommandProcessingModule.getCPMCommand();
             try {
-                Person person = CommandTranslator.translateArg(userCommand.getArg1());
-                if(QueueController.getQueue().offer(person)) return ("Человек добавлен");
+                if(QueueController.offer(CommandTranslator.translateArg(userCommand.getArg1()))) {
+                    JDBCConnection.insertPerson(CommandTranslator.translateArg(userCommand.getArg1()), CommandProcessingModule.getCPMConnection());
+                    return ("Человек добавлен");
+                }
                 else return ("Возникла ошибка добавления человека");
             } catch (SavePeopleException e) {
                 return ("Ошибка в вводе данных");
