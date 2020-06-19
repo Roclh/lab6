@@ -22,8 +22,8 @@ public class JDBCConnection {
     public static long getMaxId(){
         try {
             Class.forName("org.postgresql.Driver");
-            String url = "jdbc:postgresql://localhost:5432/PersonInfo";
-            try (java.sql.Connection con = DriverManager.getConnection(url, "postgres", "Nikita444super")) {
+            String url = "jdbc:postgresql://pg:5432/studs";
+            try (java.sql.Connection con = DriverManager.getConnection(url, "s247666", "uve257")) {
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery("SELECT max(persons.id) from persons");
                 long id = 0;
@@ -47,8 +47,8 @@ public class JDBCConnection {
     public static void deleteById(long id){
         try {
             Class.forName("org.postgresql.Driver");
-            String url = "jdbc:postgresql://localhost:5432/PersonInfo";
-            try (java.sql.Connection con = DriverManager.getConnection(url, "postgres", "Nikita444super")) {
+            String url = "jdbc:postgresql://pg:5432/studs";
+            try (java.sql.Connection con = DriverManager.getConnection(url, "s247666", "uve257")) {
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery("DELETE FROM persons WHERE id = "+id);
                 rs.close();
@@ -64,8 +64,8 @@ public class JDBCConnection {
     public static void dropTable(){
         try {
             Class.forName("org.postgresql.Driver");
-            String url = "jdbc:postgresql://localhost:5432/PersonInfo";
-            try (java.sql.Connection con = DriverManager.getConnection(url, "postgres", "Nikita444super")) {
+            String url = "jdbc:postgresql://pg:5432/studs";
+            try (java.sql.Connection con = DriverManager.getConnection(url, "s247666", "uve257")) {
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery("DELETE FROM persons");
                 rs.close();
@@ -81,8 +81,8 @@ public class JDBCConnection {
     public static void savePassword(Connection connection){
         try {
             Class.forName("org.postgresql.Driver");
-            String url = "jdbc:postgresql://localhost:5432/PersonInfo";
-            try (java.sql.Connection con = DriverManager.getConnection(url, "postgres", "Nikita444super")) {
+            String url = "jdbc:postgresql://pg:5432/studs";
+            try (java.sql.Connection con = DriverManager.getConnection(url, "s247666", "uve257")) {
                 Statement stmt = con.createStatement();
                 MessageDigest md = MessageDigest.getInstance("SHA-224");
 
@@ -104,8 +104,8 @@ public class JDBCConnection {
         boolean isWorked = true;
         try {
             Class.forName("org.postgresql.Driver");
-            String url = "jdbc:postgresql://localhost:5432/PersonInfo";
-            try (java.sql.Connection con = DriverManager.getConnection(url, "postgres", "Nikita444super")) {
+            String url = "jdbc:postgresql://pg:5432/studs";
+            try (java.sql.Connection con = DriverManager.getConnection(url, "s247666", "uve257")) {
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery("SELECT * FROM logs WHERE Login = '" + login +"'");
                 if(rs.next()){
@@ -129,8 +129,8 @@ public class JDBCConnection {
         boolean isWorked = false;
         try {
             Class.forName("org.postgresql.Driver");
-            String url = "jdbc:postgresql://localhost:5432/PersonInfo";
-            try (java.sql.Connection con = DriverManager.getConnection(url, "postgres", "Nikita444super")) {
+            String url = "jdbc:postgresql://pg:5432/studs";
+            try (java.sql.Connection con = DriverManager.getConnection(url, "s247666", "uve257")) {
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery("SELECT * FROM logs WHERE Login = '" + login +"'");
                 if(rs.next()){
@@ -156,8 +156,8 @@ public class JDBCConnection {
     public static void insertPerson(Person person, Connection connection) {
         try {
             Class.forName("org.postgresql.Driver");
-            String url = "jdbc:postgresql://localhost:5432/PersonInfo";
-            try (java.sql.Connection con = DriverManager.getConnection(url, "postgres", "Nikita444super")) {
+            String url = "jdbc:postgresql://pg:5432/studs";
+            try (java.sql.Connection con = DriverManager.getConnection(url, "s247666", "uve257")) {
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery("INSERT INTO persons(UserName,name,coordinatesx,coordinatesy,datetime,height,eyecolor,haircolor,country,locationx,locationy, locationz)\n VALUES ('" + connection.getUserName() + "','" + person.getName() + "'," + person.getCoordinates().getX() + "," + person.getCoordinates().getY() +
                         ",'" + person.getCreationDate().toString() + "'," + person.getHeight() + ",'" + person.getEyeColor().toString() + "','" + person.getHairColor() + "','" + person.getNationality().toString() + "'," + person.getLocation().getX().toString() + "," +
@@ -179,12 +179,12 @@ public class JDBCConnection {
         if (userId.equals("any")) {
             try {
                 Class.forName("org.postgresql.Driver");
-                String url = "jdbc:postgresql://localhost:5432/PersonInfo";
-                String login = "postgres";
-                String password = "Nikita444super";
+                String url = "jdbc:postgresql://pg:5432/studs";
+                String login = "s247666";
+                String password = "uve257";
                 try (java.sql.Connection con = DriverManager.getConnection(url, login, password)) {
                     Statement stmt = con.createStatement();
-                    ResultSet rs = stmt.executeQuery("SELECT * FROM public.persons\n ORDER BY id");
+                    ResultSet rs = stmt.executeQuery("SELECT * FROM persons\n ORDER BY id");
                     while (rs.next()) {
                         Person person = new Person();
                         person.setId(rs.getLong("id"));
@@ -223,8 +223,8 @@ public class JDBCConnection {
         List<Long> id = new ArrayList<>();
         try {
             Class.forName("org.postgresql.Driver");
-            String url = "jdbc:postgresql://localhost:5432/PersonInfo";
-            try (java.sql.Connection con = DriverManager.getConnection(url, "postgres", "Nikita444super")) {
+            String url = "jdbc:postgresql://pg:5432/studs";
+            try (java.sql.Connection con = DriverManager.getConnection(url, "s247666", "uve257")) {
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery("SELECT * FROM public.persons\nWHERE username ='"+connection.getUserName()+"'");
                 while(rs.next()){

@@ -3,7 +3,6 @@ package com.classes.serverSide;
 import com.classes.AllConnections;
 import com.classes.Connection;
 import com.classes.JDBCConnection;
-import com.classes.serverSide.answers.Answer;
 import com.classes.serverSide.answers.ErrAnswer;
 import com.classes.serverSide.answers.FineAnswer;
 import com.classes.serverSide.answers.Request;

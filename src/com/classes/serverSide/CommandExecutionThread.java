@@ -6,7 +6,6 @@ import com.classes.serverSide.answers.ErrAnswer;
 import com.classes.serverSide.answers.FineAnswer;
 import com.classes.serverSide.answers.Request;
 import com.commands.AllCommands;
-import com.commands.Command;
 import com.exceptions.NoSuchCommandException;
 import com.wrappers.UserCommand;
 

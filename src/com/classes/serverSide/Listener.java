@@ -1,11 +1,4 @@
 package com.classes.serverSide;
-
-import com.classes.AllConnections;
-import com.classes.Connection;
-import com.classes.JDBCConnection;
-import com.classes.serverSide.answers.*;
-
-import java.io.*;
 import java.net.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.SynchronousQueue;
@@ -14,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 public class Listener extends Thread {
-    private final static Logger logger = Logger.getLogger(Listener.class.getName());
     private ExecutorService pool;
     private int poolSize;
     private DatagramSocket datagramSocket;
