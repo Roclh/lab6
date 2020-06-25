@@ -44,16 +44,21 @@ public class ListenerThread extends Thread{
                 if(request.getCommand().equals("login")){
                     if(JDBCConnection.logIn(request.getArg1(), request.getArg2())){
                         Connection connection = new Connection(request.getArg1(), request.getArg2(), datagramPacket.getPort(), datagramPacket.getAddress());
-                        AllConnections.connect(connection);
-                        sender.send(new FineAnswer("AllFine"), connection.address, connection.PORT);
+                        if(AllConnections.connect(connection)){
+                            sender.send(new FineAnswer("AllFine"), connection.address, connection.PORT);
+                        }else sender.send(new ErrAnswer("AlreadyInUse"), datagramPacket.getAddress(), datagramPacket.getPort());
                     }else{
                         sender.send(new ErrAnswer("WrongPassword"), datagramPacket.getAddress(), datagramPacket.getPort());
                     }
                 }else if (request.getCommand().equals("auth")&&AllConnections.isDistinct(request.getUserName())) {
                     Connection connection = new Connection(request.getArg1(), request.getArg2(), datagramPacket.getPort(), datagramPacket.getAddress());
-                    AllConnections.connect(connection);
-                    JDBCConnection.savePassword(connection);
-                    sender.send(new FineAnswer("AllFine"), connection.address, connection.PORT);
+                    if(AllConnections.connect(connection)){
+                        AllConnections.doWithAll(connection1 -> System.out.println(connection1.getUserName() + "/" + connection1.getAddress().toString() +"/"+connection1.getPORT()));
+                        JDBCConnection.savePassword(connection);
+                        sender.send(new FineAnswer("AllFine"), connection.address, connection.PORT);
+                    }else{
+                        sender.send(new FineAnswer("AlreadyInUse"), connection.address, connection.PORT);
+                    }
                 } else if (request.getCommand().equals("auth")&&!AllConnections.isDistinct(request.getUserName())){
                     sender.send(new ErrAnswer("AlreadyInUse"), datagramPacket.getAddress(), datagramPacket.getPort());
                 }else if(request.getCommand().equals("exit")){

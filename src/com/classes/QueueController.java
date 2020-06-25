@@ -10,14 +10,15 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class QueueController {
-    private static Queue<Person> allPerson = new PriorityQueue<>();
+    private static Queue<Person> allPerson = new PriorityBlockingQueue<>();
     private static boolean isInitiated = false;
-    private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    public static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
     public static long size(){
         return allPerson.size();

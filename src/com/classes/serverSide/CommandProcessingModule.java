@@ -17,6 +17,7 @@ import java.sql.Connection;
  */
 
 public class CommandProcessingModule extends Thread{
+
     private static volatile UserCommand CPMCommand;
     private static volatile com.classes.Connection currentConnection;
 
@@ -25,20 +26,13 @@ public class CommandProcessingModule extends Thread{
         while (!isInterrupted());
     }
 
-    public void handle(Request request, com.classes.Connection connection, Sender sender) {
-        CPMCommand = CommandTranslator.translateCommand(request.getCommand() +" " + request.getArg1() + " " + request.getArg2());
+    public synchronized void handle(Request request, com.classes.Connection connection, Sender sender) {
+        CPMCommand = CommandTranslator.translateCommand(request.getCommand() + " " + request.getArg1() + " " + request.getArg2());
         currentConnection = connection;
         CommandExecutionThread thread = new CommandExecutionThread(request, connection, sender);
         thread.start();
     }
 
-    private Answer commandCycle(UserCommand userCommand) {
-        try {
-            return new FineAnswer(AllCommands.getCommand(userCommand.getCommand()).serverExecute());
-        } catch (NoSuchCommandException e) {
-            return new ErrAnswer(e.getMessage());
-        }
-    }
 
     public static UserCommand getCPMCommand() {
         return CPMCommand;

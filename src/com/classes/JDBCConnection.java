@@ -226,7 +226,7 @@ public class JDBCConnection {
             String url = "jdbc:postgresql://pg:5432/studs";
             try (java.sql.Connection con = DriverManager.getConnection(url, "s247666", "uve257")) {
                 Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT * FROM public.persons\nWHERE username ='"+connection.getUserName()+"'");
+                ResultSet rs = stmt.executeQuery("SELECT * FROM persons\nWHERE username ='"+connection.getUserName()+"'");
                 while(rs.next()){
                     id.add(rs.getLong("id"));
                 }
@@ -234,6 +234,42 @@ public class JDBCConnection {
                 stmt.close();
                 return id;
 
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        throw new NoAnyActivityYetException();
+    }
+
+    public static String showQueue(Connection connection) throws NoAnyActivityYetException{
+        try {
+            Class.forName("org.postgresql.Driver");
+            String url = "jdbc:postgresql://pg:5432/studs";
+            try (java.sql.Connection con = DriverManager.getConnection(url, "s247666", "uve257")) {
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT * FROM persons\nWHERE username ='"+connection.getUserName()+"'");
+                String ans = "";
+                while(rs.next()){
+                    ans = ans + ("{\"name\":"+ rs.getString("name") + "\";" +
+                            "\"id\":\"" + rs.getLong("id") + "\";" +
+                            "\"coordinates\"{\"X\":\"" + rs.getLong("coordinatesx") + "\";\"Y\":\"" +
+                            rs.getFloat("coordinatesy") + "\"};" +
+                            "\"creationDate\":\"" + rs.getString("datetime") + "\";\n    " +
+                            "\"height\":\"" + rs.getFloat("height") + "\";" +
+                            "\"eyeColor\":\"" + rs.getString("eyecolor") + "\";" +
+                            "\"hairColor\":\"" + rs.getString("haircolor") + "\";" +
+                            "\"nationality\":\"" + rs.getString("country") + "\";\n    " +
+                            "\"location\"{\"X\":" + rs.getInt("locationx") + "\";\"Y\":" +
+                            rs.getFloat("locationy") + "\";\"Z\":\"" +
+                            rs.getFloat("locationz") + "\"}\n");
+                }
+                rs.close();
+                stmt.close();
+                if(ans.length()>0){
+                    return ans;
+                }
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
