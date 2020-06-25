@@ -14,9 +14,10 @@ import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.concurrent.*;
 
 public class QueueController {
-    private static Queue<Person> allPerson = new PriorityBlockingQueue<>();
+    private static Queue<Person> allPerson = new ConcurrentLinkedQueue<>();
     private static boolean isInitiated = false;
     public static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class JDBCConnection {
 
@@ -175,7 +176,7 @@ public class JDBCConnection {
     }
 
     public static void getUserCollection(String userId) {
-        Queue<Person> allPerson = new PriorityQueue<>();
+        Queue<Person> allPerson = new ConcurrentLinkedQueue<>();
         if (userId.equals("any")) {
             try {
                 Class.forName("org.postgresql.Driver");
